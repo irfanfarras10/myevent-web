@@ -32,7 +32,6 @@
 
             .event-image,
             img {
-                height: 100%;
                 width: 100%;
             }
             .event-category {
@@ -49,10 +48,10 @@
                 padding-top: 10px;
             }
             .event-description {
-                padding-bottom: 10px;
+                padding-bottom: 50px;
             }
-            .btn {
-                width: 100%;
+            .event-date {
+                padding-bottom: 50px;
             }
             #button {
                 color: black;
@@ -66,31 +65,34 @@
         <div class="container">
             <div class="card">
                 <div class="card-image waves-effect waves-block waves-light">
-                    <img
-                        class="activator"
-                        src="https://myevent-android-api.herokuapp.com/api/events/image/5ddbcee3-9903-4f1d-9c35-cd1285afdd0f_3Jul2022105409GMT_1656845649035"
+                    <img class="activator" src={{ $data["bannerPhoto"] }}
                     />
                 </div>
                 <div class="card-content">
                     <div class="row">
-                        <div class="col s12">
+                        <div class="col m12 s12">
                             <span
                                 class="card-title activator grey-text text-darken-4"
-                                >Webinar Data Analytics
+                                >{{ $data["name"] }}
                             </span>
-                            <p class="event-category">Webinar</p>
+                            <p class="event-category">
+                                {{ $data["eventCategory"]["name"] }}
+                            </p>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s8">
+                        <div class="col m8 s12">
                             <p class="card-title event-description-title">
                                 Deskripsi Event
                             </p>
                             <p class="event-description">
-                                I am a very simple card. I am good at containing
-                                small bits of information. I am convenient
-                                because I require little markup to use
-                                effectively.
+                                {{ $data["description"] }}
+                            </p>
+                            <p class="card-title">Tanggal dan Waktu Event</p>
+                            <p class="event-date">
+                                {{
+                                    \Carbon\Carbon::parse(date("Y-m-d H:i:s", substr($data["dateEventStart"], 0, 10)))->isoFormat('dddd, D MMMM Y')
+                                }}
                             </p>
                         </div>
                         <div class="col s4">

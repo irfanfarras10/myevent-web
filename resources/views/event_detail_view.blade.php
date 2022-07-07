@@ -44,6 +44,15 @@
         .btn {
             color: black;
         }
+        .contact-person{
+            padding-left: 20px;
+            padding-top: 10px;
+            padding-right: 20px;
+            padding-bottom: 10px;
+            background-color: #e8e8e8;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 
@@ -100,6 +109,14 @@
                             Lokasi Event
                         </p>
                         {{ $location }}
+                        @if($data["eventVenueCategory"]["id"] == 1)
+                        <div style="width: 100%">
+                            <iframe scrolling="no" marginheight="0" marginwidth="0"
+                                src="https://maps.google.com/maps?width=100%&amp;height=500&amp;hl=en&amp;q=<?= $location ?>, Indonesia (Lokasi)&amp;t=&amp;z=17&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                                width="100%" height="500" frameborder="0">
+                            </iframe>
+                        </div>
+                        @endif
                     </div>
                     <div class="col m4 s12">
                         <a class="waves-effect waves-light btn amber" id="button">Daftarkan Diri</a>
@@ -113,18 +130,17 @@
                             </tr>
                             @endforeach
                         </table>
+                        <div class="content"></div>
+                        <p class="card-title">Contact Person</p>
+                        <table>
+                            @foreach ($data["eventContactPerson"] as $contactPerson)
+                            <div class="contact-person">
+                                <p>{{ $contactPerson["name"] }}</p>
+                                <p>{{ $contactPerson["eventSocialMedia"]["name"]}} : {{$contactPerson["contact"]}}</p>
+                            </div>
+                            @endforeach
+                        </table>
                     </div>
-                    <div class="col m12 s12">
-                        @if($data["eventVenueCategory"]["id"] == 1)
-                        <div style="width: 100%">
-                            <iframe scrolling="no" marginheight="0" marginwidth="0"
-                                src="https://maps.google.com/maps?width=100%&amp;height=500&amp;hl=en&amp;q=<?= $location ?>, Indonesia (Lokasi)&amp;t=&amp;z=17&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-                                width="100%" height="500" frameborder="0">
-                            </iframe>
-                        </div>
-                        @endif
-                    </div>
-                   
                 </div>
             </div>
         </div>

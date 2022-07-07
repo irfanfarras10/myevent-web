@@ -44,13 +44,7 @@
                 display: inline-block;
                 border-radius: 5px;
             }
-            .event-description-title {
-                padding-top: 10px;
-            }
-            .event-description {
-                padding-bottom: 50px;
-            }
-            .event-date {
+            .content {
                 padding-bottom: 50px;
             }
             #button {
@@ -70,7 +64,7 @@
                 </div>
                 <div class="card-content">
                     <div class="row">
-                        <div class="col m12 s12">
+                        <div class="col m8 s12">
                             <span
                                 class="card-title activator grey-text text-darken-4"
                                 >{{ $data["name"] }}
@@ -78,24 +72,38 @@
                             <p class="event-category">
                                 {{ $data["eventCategory"]["name"] }}
                             </p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col m8 s12">
+                            <div class="content"></div>
                             <p class="card-title event-description-title">
                                 Deskripsi Event
                             </p>
-                            <p class="event-description">
+
+                            <p class="content">
                                 {{ $data["description"] }}
                             </p>
                             <p class="card-title">Tanggal dan Waktu Event</p>
-                            <p class="event-date">
-                                {{
-                                    \Carbon\Carbon::parse(date("Y-m-d H:i:s", substr($data["dateEventStart"], 0, 10)))->isoFormat('dddd, D MMMM Y')
-                                }}
-                            </p>
+
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>Tanggal</td>
+                                        <td>
+                                            {{
+                                                \Carbon\Carbon::parse(date("Y-m-d H:i:s", substr($data["dateEventStart"], 0, 10)))->isoFormat('dddd, D MMMM Y')
+                                            }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Waktu</td>
+                                        <td>
+                                            {{
+                                                \Carbon\Carbon::parse(date("Y-m-d H:i:s", substr($data["timeEventStart"], 0, 10)))->isoFormat('HH:mm')
+                                            }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="col s4">
+                        <div class="col m4 s12">
                             <a
                                 class="waves-effect waves-light btn amber"
                                 id="button"

@@ -41,6 +41,9 @@
         .content {
             padding-bottom: 50px;
         }
+        .btn {
+            color: black;
+        }
     </style>
 </head>
 
@@ -100,9 +103,17 @@
                     </div>
                     <div class="col m4 s12">
                         <a class="waves-effect waves-light btn amber" id="button">Daftarkan Diri</a>
+                        <div class="content"></div>
+                        <p class="card-title">Tiket</p>
+                        <table>
+                            @foreach ($data["ticket"] as $ticket)
+                            <tr>
+                                <td>{{ $ticket["name"] }}</td>
+                                <td>@currency($ticket["price"])</td>
+                            </tr>
+                            @endforeach
+                        </table>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col m12 s12">
                         @if($data["eventVenueCategory"]["id"] == 1)
                         <div style="width: 100%">
@@ -113,6 +124,7 @@
                         </div>
                         @endif
                     </div>
+                   
                 </div>
             </div>
         </div>

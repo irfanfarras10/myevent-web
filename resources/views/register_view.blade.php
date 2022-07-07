@@ -30,6 +30,79 @@
 		display: inline-block;
 		border-radius: 5px;
 	}
+
+	.spacer {
+		padding-bottom: 50px;
+	}
+
+	.contact-person {
+		padding-left: 20px;
+		padding-top: 10px;
+		padding-right: 20px;
+		padding-bottom: 10px;
+		background-color: #e8e8e8;
+		margin-bottom: 20px;
+		border-radius: 5px;
+	}
+
+	/* label focus color */
+	.input-field input[type=text]:focus+label {
+		color: #ffc107 !important;
+	}
+
+	/* label focus color */
+	.input-field input[type=text] {
+		border-bottom: 1px solid black !important;
+		box-shadow: 0 1px 0 0 black !important;
+	}
+
+	/* label underline focus color */
+	.input-field input[type=text]:focus {
+		border-bottom: 1px solid #ffc107 !important;
+		box-shadow: 0 1px 0 0 #ffc107 !important;
+	}
+
+	/* label focus color */
+	.input-field input[type=email]:focus+label {
+		color: #ffc107 !important;
+	}
+
+	/* label focus color */
+	.input-field input[type=email] {
+		border-bottom: 1px solid black !important;
+		box-shadow: 0 1px 0 0 black !important;
+	}
+
+	/* label underline focus color */
+	.input-field input[type=email]:focus {
+		border-bottom: 1px solid #ffc107 !important;
+		box-shadow: 0 1px 0 0 #ffc107 !important;
+	}
+
+	/* label focus color */
+	.input-field input[type=tel]:focus+label {
+		color: #ffc107 !important;
+	}
+
+	/* label focus color */
+	.input-field input[type=tel] {
+		border-bottom: 1px solid black !important;
+		box-shadow: 0 1px 0 0 black !important;
+	}
+
+	/* label underline focus color */
+	.input-field input[type=tel]:focus {
+		border-bottom: 1px solid #ffc107 !important;
+		box-shadow: 0 1px 0 0 #ffc107 !important;
+	}
+
+	label {
+		color: black !important;
+	}
+
+	ul.dropdown-content.select-dropdown li span {
+		color: black;
+	}
 </style>
 <title>Registrasi Peserta</title>
 
@@ -48,6 +121,83 @@
 						<p class="event-category">
 							{{ $data["eventCategory"]["name"] }}
 						</p>
+						<div class="spacer"></div>
+						<form action="">
+							<div class="input-field col s12">
+								<input id="fullname" type="text" class="validate">
+								<label for="fullname">Nama Lengkap</label>
+							</div>
+							<div class="input-field col s12">
+								<input id="email" type="email" class="validate">
+								<label for="email">Email</label>
+							</div>
+							<div class="input-field col s12">
+								<input id="email" type="tel" class="validate">
+								<label for="email">Nomor HP</label>
+							</div>
+							<div class="input-field col s12">
+								<select>
+									<option value="" disabled selected>Pilih Tanggal</option>
+									@foreach ($eventDate["localDates"] as $date)
+									<option value="<?= $date ?>">{{ $date }}</option>
+									@endforeach
+								</select>
+							</div>
+						</form>
+					</div>
+					<div class="col m4 s12">
+						<p class="card-title">Organized By</p>
+						{{ $data["eventOrganizer"]["organizerName"] }}
+						<div class="spacer"></div>
+						<p class="card-title">Deskripsi Event</p>
+						{{ $data["description"] }}
+						<div class="spacer"></div>
+						<p class="card-title">Tanggal dan Waktu Event</p>
+						<table>
+							<tbody>
+								<tr>
+									<td>Tanggal</td>
+									<td>
+										{{
+										\Carbon\Carbon::parse(date("Y-m-d H:i:s", substr($data["dateEventStart"], 0,
+										10)))->isoFormat('dddd, D MMMM Y')
+										}}
+									</td>
+								</tr>
+								<tr>
+									<td>Waktu</td>
+									<td>
+										{{
+										\Carbon\Carbon::parse(date("Y-m-d H:i:s", substr($data["timeEventStart"], 0,
+										10)))->isoFormat('HH:mm')
+										}}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="spacer"></div>
+						<p class="card-title event-description-title">
+							Lokasi Event
+						</p>
+						{{ $location }}
+						@if($data["eventVenueCategory"]["id"] == 1)
+						<div style="width: 100%">
+							<iframe scrolling="no" marginheight="0" marginwidth="0"
+								src="https://maps.google.com/maps?width=100%&amp;height=200&amp;hl=en&amp;q=<?= $location ?>, Indonesia (Lokasi)&amp;t=&amp;z=17&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+								width="100%" height="200" frameborder="0">
+							</iframe>
+						</div>
+						@endif
+						<div class="spacer"></div>
+						<p class="card-title">Contact Person</p>
+						<table>
+							@foreach ($data["eventContactPerson"] as $contactPerson)
+							<div class="contact-person">
+								<p>{{ $contactPerson["name"] }}</p>
+								<p>{{ $contactPerson["eventSocialMedia"]["name"]}} : {{$contactPerson["contact"]}}</p>
+							</div>
+							@endforeach
+						</table>
 					</div>
 				</div>
 			</div>
@@ -55,6 +205,9 @@
 	</div>
 	<!--JavaScript at end of body for optimized loading-->
 	<script type="text/javascript" src="js/materialize.min.js"></script>
+	<script type="text/javascript">
+		M.AutoInit();
+	</script>
 </body>
 
 </html>

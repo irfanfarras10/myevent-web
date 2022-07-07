@@ -26,6 +26,15 @@ class UserController extends Controller
     {
         $eventDetailUrl = 'https://myevent-android-api.herokuapp.com/web/events/' . $id;
         $responseData = Http::get($eventDetailUrl);
-        return View::make('register_view')->with('data', $responseData);
+        $responseLocation = $responseData["venue"];
+        if ($responseData["eventVenueCategory"]["id"] == 1) {
+            $location = explode("|", $responseData["venue"]);
+            $eventDetailLocationUrl = "https://api.geoapify.com/v1/geocode/reverse?lat=" . $location[0] . "&lon=" . $location[1] . "&apiKey=26018a31a0aa41699818b7b50ea82935";
+            $response = Http::get($eventDetailLocationUrl);
+            $responseLocation = $response["features"][0]["properties"]["formatted"];
+        }
+        $eventDateUrl = 'https://myevent-android-api.herokuapp.com/web/events/' . $id . '/dates';
+        $responseDate = Http::get($eventDateUrl);
+        return View::make('register_view')->with('data', $responseData)->with('location', $responseLocation)->with('eventDate', $responseDate);
     }
 }

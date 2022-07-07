@@ -51,6 +51,12 @@
             .event-description {
                 padding-bottom: 10px;
             }
+            .btn {
+                width: 100%;
+            }
+            #button {
+                color: black;
+            }
         </style>
     </head>
 
@@ -86,6 +92,13 @@
                                 because I require little markup to use
                                 effectively.
                             </p>
+                        </div>
+                        <div class="col s4">
+                            <a
+                                class="waves-effect waves-light btn amber"
+                                id="button"
+                                >Daftarkan Diri</a
+                            >
                         </div>
                     </div>
                 </div>

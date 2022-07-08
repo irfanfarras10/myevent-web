@@ -10,6 +10,8 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet" />
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<!-- Compiled and minified JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<!--Let browser know website is optimized for mobile-->
@@ -124,32 +126,33 @@
 						</p>
 						<div class="spacer"></div>
 
-						<form action="{{ url('event/' . $data['id'] . '/register') }}" method="post" enctype="multipart/form-data">
+						<form method="post" enctype="multipart/form-data" id="registerForm">
 							<input name="_token" type="hidden" value="{{ csrf_token() }}" />
 							<input type="hidden" name="eventPaymentCategory" value="{{ $data['eventPaymentCategory']['id'] }}">
+							<input type="hidden" name="eventId" value="{{ $data['id'] }}">
 							<div class="input-field col s12">
-								<input id="fullname" type="text" class="validate" name="name">
+								<input id="fullname" type="text" class="validate" name="name" required>
 								<label for="fullname">Nama Lengkap</label>
 								@error("name")
 								<div class="red-text">{{ $message }}</div>
 								@enderror
 							</div>
 							<div class="input-field col s12">
-								<input id="email" type="email" class="validate" name="email">
+								<input id="email" type="email" class="validate" name="email" required>
 								<label for="email">Email</label>
 								@error("email")
 								<div class="red-text">{{ $message }}</div>
 								@enderror
 							</div>
 							<div class="input-field col s12">
-								<input id="phoneNumber" type="tel" class="validate" name="phoneNumber">
+								<input id="phoneNumber" type="tel" class="validate" name="phoneNumber" required>
 								<label for="phoneNumber">Nomor HP</label>
 								@error("phoneNumber")
 								<div class="red-text">{{ $message }}</div>
 								@enderror
 							</div>
 							<div class="input-field col s12">
-								<select name="eventDate">
+								<select name="eventDate" required>
 									<option value="" disabled selected>Pilih Tanggal</option>
 									@foreach ($eventDate["localDates"] as $date)
 									<option value="<?= $date ?>">{{ $date }}</option>
@@ -160,10 +163,10 @@
 								@enderror
 							</div>
 							<div class="input-field col s12">
-								<select name="ticketId">
+								<select name="ticketId" required>
 									<option value="" disabled selected>Pilih Tiket</option>
 									@foreach ($data["ticket"] as $ticket)
-									<option value="<?= $ticket['id'] ?>">{{ $ticket["name"] }}</option>
+									<option value="{{ $ticket['id'] . '|' . $ticket['name'] }}">{{ $ticket["name"] }}</option>
 									@endforeach
 								</select>
 								@error("ticketId")
@@ -173,13 +176,13 @@
 							@if ($data["ticket"][0]["price"] > 0)
 
 							<div class="input-field col s12">
-								<select name="paymentId">
-									<option value="" disabled selected>Pilih Jenis Pembayaran</option>
+								<select name="paymentId" required>
+									<option value="" disabled selected>Pilih Metode Pembayaran</option>
 									@foreach ($data["eventPayment"] as $payment)
-									<option value="<?= $payment['id'] ?>">{{ $payment["type"] }}</option>
+									<option value="{{ $payment['id'] . '|' . $payment['type'] }}">{{ $payment["type"] }}</option>
 									@endforeach
 								</select>
-								@error("paymentId")
+								@error("ticketId")
 								<div class="red-text">{{ $message }}</div>
 								@enderror
 							</div>
@@ -188,10 +191,10 @@
 								<div class="file-field input-field">
 									<div class="btn amber black-text">
 										<span>Unggah Bukti Pembayaran</span>
-										<input type="file" name="paymentPhoto">
+										<input type="file" name="paymentPhoto" required>
 									</div>
 									<div class="file-path-wrapper">
-										<input class="file-path validate" type="text">
+										<input class="file-path validate" type="text" required>
 									</div>
 									@error("paymentPhoto")
 									<div class="red-text">{{ $message }}</div>
@@ -202,9 +205,71 @@
 
 							@endif
 							<div class="input-field col s12">
+								<!-- <a class="waves-effect waves-light btn modal-trigger" href="#confirmationModal">Daftar</a> -->
 								<input type="submit" value="Daftar" class="btn col s12 amber black-text">
 							</div>
 						</form>
+
+						<div id="confirmationModal" class="modal">
+							<div class="modal-content">
+								<center>
+									<h4>Konfirmasi Pendaftaran</h4>
+								</center>
+								<table>
+									<tr>
+										<td>
+											<p>Nama Lengkap</p>
+										</td>
+										<td>
+											<p id="confirm-name"></p>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<p>Email</p>
+										</td>
+										<td>
+											<p id="confirm-email"></p>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<p>Nomor HP</p>
+										</td>
+										<td>
+											<p id="confirm-phone-number"></p>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<p>Tanggal Event</p>
+										</td>
+										<td>
+											<p id="confirm-event-date"></p>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<p>Tiket</p>
+										</td>
+										<td>
+											<p id="confirm-event-ticket"></p>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<p>Metode Pembayaran</p>
+										</td>
+										<td>
+											<p id="confirm-event-payment"></p>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="modal-footer">
+								<!-- <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a> -->
+							</div>
+						</div>
 					</div>
 					<div class="col m4 s12">
 						@if($data["eventPayment"] != null)
@@ -281,8 +346,25 @@
 	</div>
 	<!--JavaScript at end of body for optimized loading-->
 	<script type="text/javascript" src="js/materialize.min.js"></script>
+
 	<script type="text/javascript">
 		M.AutoInit();
+
+		$(document).ready(function () {
+			$('form').submit(function (e) {
+				var datastring = $("#registerForm").serializeArray();
+				console.log(datastring);
+				$("#confirm-name").text(datastring[3].value);
+				$("#confirm-email").text(datastring[4].value);
+				$("#confirm-phone-number").text(datastring[5].value);
+				$("#confirm-event-date").text(datastring[6].value);
+				$("#confirm-event-ticket").text(datastring[7].value.split('|')[1]);
+				$("#confirm-event-payment").text(datastring[8].value.split('|')[1]);
+				$('.modal').modal('open');
+				e.preventDefault();
+			});
+
+		});
 	</script>
 </body>
 

@@ -41,51 +41,71 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
-        $validateEvent = null;
+        // $validateEvent = null;
         if ($request->eventPaymentCategory == 1) {
-            $validateEvent = $request->validate(
-                [
-                    'name' => 'required',
-                    'email' => 'required',
-                    'phoneNumber' => 'required',
-                    'eventDate' => 'required',
-                    'ticketId' => 'required',
-                ],
-                [
-                    'name.required' => 'Nama lengkap harus diisi',
-                    'email.required' => 'Email harus diisi',
-                    'phoneNumber.required' => 'Nomor HP harus diisi',
-                    'eventDate.required' => 'Tanggal event harus dipilih',
-                    'ticketId.required' => 'Tiket harus dipilih',
-                ],
-            );
+            // $validateEvent = $request->validate(
+            //     [
+            //         'name' => 'required',
+            //         'email' => 'required',
+            //         'phoneNumber' => 'required',
+            //         'eventDate' => 'required',
+            //         'ticketId' => 'required',
+            //     ],
+            //     [
+            //         'name.required' => 'Nama lengkap harus diisi',
+            //         'email.required' => 'Email harus diisi',
+            //         'phoneNumber.required' => 'Nomor HP harus diisi',
+            //         'eventDate.required' => 'Tanggal event harus dipilih',
+            //         'ticketId.required' => 'Tiket harus dipilih',
+            //     ],
+            // );
         } else {
-            $validateEvent = $request->validate(
-                [
-                    'name' => 'required',
-                    'email' => 'required',
-                    'phoneNumber' => 'required',
-                    'eventDate' => 'required',
-                    'ticketId' => 'required',
-                    'paymentId' => 'required',
-                    'paymentPhoto' => 'required',
-                ],
-                [
-                    'name.required' => 'Nama lengkap harus diisi',
-                    'email.required' => 'Email harus diisi',
-                    'phoneNumber.required' => 'Nomor HP harus diisi',
-                    'eventDate.required' => 'Tanggal event harus dipilih',
-                    'ticketId.required' => 'Tiket harus dipilih',
-                    'paymentId.required' => 'Metode pembayaran harus dipilih',
-                    'paymentPhoto.required' => 'Foto pembayaran harus diunggah'
-                ],
-            );
-        }
+            //     $validateEvent = $request->validate(
+            //         [
+            //             'name' => 'required',
+            //             'email' => 'required',
+            //             'phoneNumber' => 'required',
+            //             'eventDate' => 'required',
+            //             'ticketId' => 'required',
+            //             'paymentId' => 'required',
+            //             'paymentPhoto' => 'required',
+            //         ],
+            //         [
+            //             'name.required' => 'Nama lengkap harus diisi',
+            //             'email.required' => 'Email harus diisi',
+            //             'phoneNumber.required' => 'Nomor HP harus diisi',
+            //             'eventDate.required' => 'Tanggal event harus dipilih',
+            //             'ticketId.required' => 'Tiket harus dipilih',
+            //             'paymentId.required' => 'Metode pembayaran harus dipilih',
+            //             'paymentPhoto.required' => 'Foto pembayaran harus diunggah'
+            //         ],
+            //     );
+            // }
 
-
-
-        if ($validateEvent) {
-            return redirect()->back()->withErrors($validateEvent);
+            // if ($validateEvent == false) {
+            //     return redirect()->back()->withErrors($validateEvent);
+            // } else {
+            //     if ($request->eventPaymentCategory == 1) {
+            //     } else {
+            //         return redirect()->back()->with('userData',  $request);
+            //         // $response = Http::attach(
+            //         //     'name',
+            //         //     $request->name,
+            //         //     'email',
+            //         //     $request->email,
+            //         //     'phoneNumber',
+            //         //     $request->phoneNumber,
+            //         //     'eventDate',
+            //         //     $request->eventDate,
+            //         //     'ticketId',
+            //         //     $request->ticketId,
+            //         //     'paymentId',
+            //         //     $request->paymentId,
+            //         //     'paymentPhoto',
+            //         //     $request->paymentPhoto,
+            //         // )->post('https://myevent-android-api.herokuapp.com/web/events/' . $request->eventId .  '/participant/regist');
+            //         // dd($response);
+            //     }
         }
     }
 }

@@ -103,11 +103,6 @@
 	ul.dropdown-content.select-dropdown li span {
 		color: black;
 	}
-
-
-	.btn {
-		color: black;
-	}
 </style>
 <title>Registrasi Peserta</title>
 
@@ -128,19 +123,30 @@
 							{{ $data["eventCategory"]["name"] }}
 						</p>
 						<div class="spacer"></div>
+
 						<form action="{{ url('event/' . $data['id'] . '/register') }}" method="post" enctype="multipart/form-data">
 							<input name="_token" type="hidden" value="{{ csrf_token() }}" />
+							<input type="hidden" name="eventPaymentCategory" value="{{ $data['eventPaymentCategory']['id'] }}">
 							<div class="input-field col s12">
 								<input id="fullname" type="text" class="validate" name="name">
 								<label for="fullname">Nama Lengkap</label>
+								@error("name")
+								<div class="red-text">{{ $message }}</div>
+								@enderror
 							</div>
 							<div class="input-field col s12">
 								<input id="email" type="email" class="validate" name="email">
 								<label for="email">Email</label>
+								@error("email")
+								<div class="red-text">{{ $message }}</div>
+								@enderror
 							</div>
 							<div class="input-field col s12">
 								<input id="phoneNumber" type="tel" class="validate" name="phoneNumber">
 								<label for="phoneNumber">Nomor HP</label>
+								@error("phoneNumber")
+								<div class="red-text">{{ $message }}</div>
+								@enderror
 							</div>
 							<div class="input-field col s12">
 								<select name="eventDate">
@@ -149,6 +155,9 @@
 									<option value="<?= $date ?>">{{ $date }}</option>
 									@endforeach
 								</select>
+								@error("eventDate")
+								<div class="red-text">{{ $message }}</div>
+								@enderror
 							</div>
 							<div class="input-field col s12">
 								<select name="ticketId">
@@ -157,6 +166,9 @@
 									<option value="<?= $ticket['id'] ?>">{{ $ticket["name"] }}</option>
 									@endforeach
 								</select>
+								@error("ticketId")
+								<div class="red-text">{{ $message }}</div>
+								@enderror
 							</div>
 							@if ($data["ticket"][0]["price"] > 0)
 
@@ -167,21 +179,30 @@
 									<option value="<?= $payment['id'] ?>">{{ $payment["type"] }}</option>
 									@endforeach
 								</select>
+								@error("paymentId")
+								<div class="red-text">{{ $message }}</div>
+								@enderror
 							</div>
+
 							<div class="file-field input-field col s12">
 								<div class="file-field input-field">
-									<div class="btn amber">
+									<div class="btn amber black-text">
 										<span>Unggah Bukti Pembayaran</span>
 										<input type="file" name="paymentPhoto">
 									</div>
 									<div class="file-path-wrapper">
 										<input class="file-path validate" type="text">
 									</div>
+									@error("paymentPhoto")
+									<div class="red-text">{{ $message }}</div>
+									@enderror
 								</div>
+
 							</div>
+
 							@endif
 							<div class="input-field col s12">
-								<input type="submit" value="Daftar" class="btn col s12 amber">
+								<input type="submit" value="Daftar" class="btn col s12 amber black-text">
 							</div>
 						</form>
 					</div>
@@ -236,7 +257,7 @@
 						@if($data["eventVenueCategory"]["id"] == 1)
 						<div style="width: 100%">
 							<iframe scrolling="no" marginheight="0" marginwidth="0"
-								src="https://maps.google.com/maps?width=100%&amp;height=200&amp;hl=en&amp;q=<?= $location ?>, Indonesia (Lokasi)&amp;t=&amp;z=17&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+								src="https://maps.google.com/maps?width=100%&amp;height=200&amp;hl=en&amp;q={{ $location }}, Indonesia (Lokasi)&amp;t=&amp;z=17&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
 								width="100%" height="200" frameborder="0">
 							</iframe>
 						</div>

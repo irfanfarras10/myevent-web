@@ -41,6 +41,51 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
-        dd($request->all());
+        $validateEvent = null;
+        if ($request->eventPaymentCategory == 1) {
+            $validateEvent = $request->validate(
+                [
+                    'name' => 'required',
+                    'email' => 'required',
+                    'phoneNumber' => 'required',
+                    'eventDate' => 'required',
+                    'ticketId' => 'required',
+                ],
+                [
+                    'name.required' => 'Nama lengkap harus diisi',
+                    'email.required' => 'Email harus diisi',
+                    'phoneNumber.required' => 'Nomor HP harus diisi',
+                    'eventDate.required' => 'Tanggal event harus dipilih',
+                    'ticketId.required' => 'Tiket harus dipilih',
+                ],
+            );
+        } else {
+            $validateEvent = $request->validate(
+                [
+                    'name' => 'required',
+                    'email' => 'required',
+                    'phoneNumber' => 'required',
+                    'eventDate' => 'required',
+                    'ticketId' => 'required',
+                    'paymentId' => 'required',
+                    'paymentPhoto' => 'required',
+                ],
+                [
+                    'name.required' => 'Nama lengkap harus diisi',
+                    'email.required' => 'Email harus diisi',
+                    'phoneNumber.required' => 'Nomor HP harus diisi',
+                    'eventDate.required' => 'Tanggal event harus dipilih',
+                    'ticketId.required' => 'Tiket harus dipilih',
+                    'paymentId.required' => 'Metode pembayaran harus dipilih',
+                    'paymentPhoto.required' => 'Foto pembayaran harus diunggah'
+                ],
+            );
+        }
+
+
+
+        if ($validateEvent) {
+            return redirect()->back()->withErrors($validateEvent);
+        }
     }
 }

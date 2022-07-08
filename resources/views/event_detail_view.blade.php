@@ -39,10 +39,6 @@
 			padding-bottom: 50px;
 		}
 
-		.btn {
-			color: black;
-		}
-
 		.contact-person {
 			padding-left: 20px;
 			padding-top: 10px;
@@ -109,14 +105,14 @@
 						@if($data["eventVenueCategory"]["id"] == 1)
 						<div style="width: 100%">
 							<iframe scrolling="no" marginheight="0" marginwidth="0"
-								src="https://maps.google.com/maps?width=100%&amp;height=500&amp;hl=en&amp;q=<?= $location ?>, Indonesia (Lokasi)&amp;t=&amp;z=17&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+								src="https://maps.google.com/maps?width=100%&amp;height=500&amp;hl=en&amp;q={{ $location }}, Indonesia (Lokasi)&amp;t=&amp;z=17&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
 								width="100%" height="500" frameborder="0">
 							</iframe>
 						</div>
 						@endif
 					</div>
 					<div class="col m4 s12">
-						<a class="waves-effect waves-light btn amber col s12" id="button"
+						<a class="waves-effect waves-light btn amber col s12 black-text" id="button"
 							href="{{ url('/event/' . $data['id'] . '/register') }}">Daftarkan Diri</a>
 						<div class="content"></div>
 						<p class="card-title">Tiket</p>

@@ -54,6 +54,40 @@ class UserController extends Controller
     public function register(Request $request)
     {
         if ($request->eventPaymentCategory == 1) {
+            $client = new Client([
+                'base_uri' => 'https://myevent-android-api.herokuapp.com/web/',
+            ]);
+            $response = $client->request('POST', 'events/' . $request->eventId .  '/participant/regist', [
+                'multipart' => [
+                    [
+                        'name' => 'name',
+                        'contents' => $request->name,
+                    ],
+                    [
+                        'name' => 'email',
+                        'contents' => $request->email,
+                    ],
+                    [
+                        'name' => 'phoneNumber',
+                        'contents' => $request->phoneNumber,
+                    ],
+                    [
+                        'name' => 'eventDate',
+                        'contents' => strtotime($request->eventDate) * 1000,
+                    ],
+                    [
+                        'name' => 'ticketId',
+                        'contents' => $request->ticketId,
+                    ],
+                    [
+                        'name' => 'paymentId',
+                        'contents' => $request->paymentId,
+                    ],
+                ]
+            ]);
+            if ($response->getStatusCode() == 201) {
+                return View::make('register_success_view')->with('eventId', $request->eventId)->with('eventPaymentCategory', $request->eventPaymentCategory);
+            }
         } else {
             $client = new Client([
                 'base_uri' => 'https://myevent-android-api.herokuapp.com/web/',

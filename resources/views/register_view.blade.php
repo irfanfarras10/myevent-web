@@ -10,8 +10,6 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet" />
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<!-- Compiled and minified JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<!--Let browser know website is optimized for mobile-->
@@ -126,7 +124,7 @@
 						</p>
 						<div class="spacer"></div>
 
-						<form method="post" enctype="multipart/form-data" id="registerForm">
+						<form action="{{ url('event/' . $data['id'] . '/confirm/') }}" method="post" enctype="multipart/form-data">
 							<input name="_token" type="hidden" value="{{ csrf_token() }}" />
 							<input type="hidden" name="eventPaymentCategory" value="{{ $data['eventPaymentCategory']['id'] }}">
 							<input type="hidden" name="eventId" value="{{ $data['id'] }}">
@@ -166,7 +164,7 @@
 								<select name="ticketId" required>
 									<option value="" disabled selected>Pilih Tiket</option>
 									@foreach ($data["ticket"] as $ticket)
-									<option value="{{ $ticket['id'] . '|' . $ticket['name'] }}">{{ $ticket["name"] }}</option>
+									<option value="<?= $ticket['id'] . '|' . $ticket['name'] ?>">{{ $ticket["name"] }}</option>
 									@endforeach
 								</select>
 								@error("ticketId")
@@ -177,12 +175,12 @@
 
 							<div class="input-field col s12">
 								<select name="paymentId" required>
-									<option value="" disabled selected>Pilih Metode Pembayaran</option>
+									<option value="" disabled selected>Pilih Jenis Pembayaran</option>
 									@foreach ($data["eventPayment"] as $payment)
-									<option value="{{ $payment['id'] . '|' . $payment['type'] }}">{{ $payment["type"] }}</option>
+									<option value="<?= $payment['id'] . '|' . $payment['type']?>">{{ $payment["type"] }}</option>
 									@endforeach
 								</select>
-								@error("ticketId")
+								@error("paymentId")
 								<div class="red-text">{{ $message }}</div>
 								@enderror
 							</div>
@@ -212,62 +210,11 @@
 
 						<div id="confirmationModal" class="modal">
 							<div class="modal-content">
-								<center>
-									<h4>Konfirmasi Pendaftaran</h4>
-								</center>
-								<table>
-									<tr>
-										<td>
-											<p>Nama Lengkap</p>
-										</td>
-										<td>
-											<p id="confirm-name"></p>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<p>Email</p>
-										</td>
-										<td>
-											<p id="confirm-email"></p>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<p>Nomor HP</p>
-										</td>
-										<td>
-											<p id="confirm-phone-number"></p>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<p>Tanggal Event</p>
-										</td>
-										<td>
-											<p id="confirm-event-date"></p>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<p>Tiket</p>
-										</td>
-										<td>
-											<p id="confirm-event-ticket"></p>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<p>Metode Pembayaran</p>
-										</td>
-										<td>
-											<p id="confirm-event-payment"></p>
-										</td>
-									</tr>
-								</table>
+								<h4>Modal Header</h4>
+								<p>A bunch of text</p>
 							</div>
 							<div class="modal-footer">
-								<!-- <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a> -->
+								<a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
 							</div>
 						</div>
 					</div>
@@ -346,25 +293,8 @@
 	</div>
 	<!--JavaScript at end of body for optimized loading-->
 	<script type="text/javascript" src="js/materialize.min.js"></script>
-
 	<script type="text/javascript">
 		M.AutoInit();
-
-		$(document).ready(function () {
-			$('form').submit(function (e) {
-				var datastring = $("#registerForm").serializeArray();
-				console.log(datastring);
-				$("#confirm-name").text(datastring[3].value);
-				$("#confirm-email").text(datastring[4].value);
-				$("#confirm-phone-number").text(datastring[5].value);
-				$("#confirm-event-date").text(datastring[6].value);
-				$("#confirm-event-ticket").text(datastring[7].value.split('|')[1]);
-				$("#confirm-event-payment").text(datastring[8].value.split('|')[1]);
-				$('.modal').modal('open');
-				e.preventDefault();
-			});
-
-		});
 	</script>
 </body>
 

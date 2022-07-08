@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
 
 class UserController extends Controller
 {
@@ -39,73 +40,48 @@ class UserController extends Controller
         return View::make('register_view')->with('data', $responseData)->with('location', $responseLocation)->with('eventDate', $responseDate);
     }
 
+    public function showConfirmation(Request $request)
+    {
+        return View::make('register_confirmation_view')->with('data', $request);
+    }
+
     public function register(Request $request)
     {
-        // $validateEvent = null;
         if ($request->eventPaymentCategory == 1) {
-            // $validateEvent = $request->validate(
-            //     [
-            //         'name' => 'required',
-            //         'email' => 'required',
-            //         'phoneNumber' => 'required',
-            //         'eventDate' => 'required',
-            //         'ticketId' => 'required',
-            //     ],
-            //     [
-            //         'name.required' => 'Nama lengkap harus diisi',
-            //         'email.required' => 'Email harus diisi',
-            //         'phoneNumber.required' => 'Nomor HP harus diisi',
-            //         'eventDate.required' => 'Tanggal event harus dipilih',
-            //         'ticketId.required' => 'Tiket harus dipilih',
-            //     ],
-            // );
         } else {
-            //     $validateEvent = $request->validate(
-            //         [
-            //             'name' => 'required',
-            //             'email' => 'required',
-            //             'phoneNumber' => 'required',
-            //             'eventDate' => 'required',
-            //             'ticketId' => 'required',
-            //             'paymentId' => 'required',
-            //             'paymentPhoto' => 'required',
-            //         ],
-            //         [
-            //             'name.required' => 'Nama lengkap harus diisi',
-            //             'email.required' => 'Email harus diisi',
-            //             'phoneNumber.required' => 'Nomor HP harus diisi',
-            //             'eventDate.required' => 'Tanggal event harus dipilih',
-            //             'ticketId.required' => 'Tiket harus dipilih',
-            //             'paymentId.required' => 'Metode pembayaran harus dipilih',
-            //             'paymentPhoto.required' => 'Foto pembayaran harus diunggah'
-            //         ],
-            //     );
-            // }
 
-            // if ($validateEvent == false) {
-            //     return redirect()->back()->withErrors($validateEvent);
-            // } else {
-            //     if ($request->eventPaymentCategory == 1) {
-            //     } else {
-            //         return redirect()->back()->with('userData',  $request);
-            //         // $response = Http::attach(
-            //         //     'name',
-            //         //     $request->name,
-            //         //     'email',
-            //         //     $request->email,
-            //         //     'phoneNumber',
-            //         //     $request->phoneNumber,
-            //         //     'eventDate',
-            //         //     $request->eventDate,
-            //         //     'ticketId',
-            //         //     $request->ticketId,
-            //         //     'paymentId',
-            //         //     $request->paymentId,
-            //         //     'paymentPhoto',
-            //         //     $request->paymentPhoto,
-            //         // )->post('https://myevent-android-api.herokuapp.com/web/events/' . $request->eventId .  '/participant/regist');
-            //         // dd($response);
-            //     }
+            // $client = new Client([
+            //     'base_uri' => 'https://myevent-android-api.herokuapp.com/web/',
+            // ]);
+            // $response = $client->request('POST', 'events/' . $request->eventId .  '/participant/regist', [
+            //     'multipart' => [
+            //         [
+            //             'name' => 'name',
+            //             'contents' => $request->name,
+            //         ],
+            //         [
+            //             'name' => 'email',
+            //             'contents' => $request->email,
+            //         ],
+            //         [
+            //             'name' => 'phoneNumber',
+            //             'contents' => $request->phoneNumber,
+            //         ],
+            //         [
+            //             'name' => 'eventDate',
+            //             'contents' => strtotime($request->eventDate) * 1000,
+            //         ],
+            //         [
+            //             'name' => 'ticketId',
+            //             'contents' => $request->ticketId,
+            //         ],
+            //         [
+            //             'name' => 'paymentId',
+            //             'contents' => $request->paymentId,
+            //         ],
+            //     ]
+            // ]);
+            // dd($response->getBody()->getContents())
         }
     }
 }

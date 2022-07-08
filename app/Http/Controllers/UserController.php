@@ -90,7 +90,9 @@ class UserController extends Controller
                     ]
                 ]
             ]);
-            dd($response->getBody()->getContents());
+            if ($response->getStatusCode() == 201) {
+                return View::make('register_success_view')->with('eventId', $request->eventId);
+            }
         }
     }
 }

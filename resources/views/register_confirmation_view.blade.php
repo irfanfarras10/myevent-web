@@ -84,7 +84,9 @@
                         </div>
                         <div class="col s6 right-align">
                             <div class="spacer"></div>
-                            <input type="submit" class="waves-effect waves-light btn black-text btn-flat" value="Tidak">
+                            <a href="{{ url()->previous() }}"
+                                class="waves-effect waves-light btn black-text btn-flat">Tidak
+                            </a>
                         </div>
                         <div class="col s6 left-align">
                             <div class="spacer"></div>

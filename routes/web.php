@@ -17,4 +17,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/event/{id}', [UserController::class, 'showEventDetail']);
+Route::post('/event/{id}/register', [UserController::class, 'register']);
 Route::get('/event/{id}/register', [UserController::class, 'showRegister']);

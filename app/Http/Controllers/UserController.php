@@ -22,6 +22,7 @@ class UserController extends Controller
 
         return View::make('event_detail_view')->with('data', $responseData)->with('location', $responseLocation);
     }
+
     public function showRegister($id)
     {
         $eventDetailUrl = 'https://myevent-android-api.herokuapp.com/web/events/' . $id;
@@ -36,5 +37,10 @@ class UserController extends Controller
         $eventDateUrl = 'https://myevent-android-api.herokuapp.com/web/events/' . $id . '/dates';
         $responseDate = Http::get($eventDateUrl);
         return View::make('register_view')->with('data', $responseData)->with('location', $responseLocation)->with('eventDate', $responseDate);
+    }
+
+    public function register(Request $request)
+    {
+        dd($request->all());
     }
 }

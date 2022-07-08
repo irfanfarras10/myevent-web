@@ -128,21 +128,22 @@
 							{{ $data["eventCategory"]["name"] }}
 						</p>
 						<div class="spacer"></div>
-						<form action="">
+						<form action="{{ url('event/' . $data['id'] . '/register') }}" method="post" enctype="multipart/form-data">
+							<input name="_token" type="hidden" value="{{ csrf_token() }}" />
 							<div class="input-field col s12">
-								<input id="fullname" type="text" class="validate">
+								<input id="fullname" type="text" class="validate" name="name">
 								<label for="fullname">Nama Lengkap</label>
 							</div>
 							<div class="input-field col s12">
-								<input id="email" type="email" class="validate">
+								<input id="email" type="email" class="validate" name="email">
 								<label for="email">Email</label>
 							</div>
 							<div class="input-field col s12">
-								<input id="email" type="tel" class="validate">
-								<label for="email">Nomor HP</label>
+								<input id="phoneNumber" type="tel" class="validate" name="phoneNumber">
+								<label for="phoneNumber">Nomor HP</label>
 							</div>
 							<div class="input-field col s12">
-								<select>
+								<select name="eventDate">
 									<option value="" disabled selected>Pilih Tanggal</option>
 									@foreach ($eventDate["localDates"] as $date)
 									<option value="<?= $date ?>">{{ $date }}</option>
@@ -150,7 +151,7 @@
 								</select>
 							</div>
 							<div class="input-field col s12">
-								<select>
+								<select name="ticketId">
 									<option value="" disabled selected>Pilih Tiket</option>
 									@foreach ($data["ticket"] as $ticket)
 									<option value="<?= $ticket['id'] ?>">{{ $ticket["name"] }}</option>
@@ -160,7 +161,7 @@
 							@if ($data["ticket"][0]["price"] > 0)
 
 							<div class="input-field col s12">
-								<select>
+								<select name="paymentId">
 									<option value="" disabled selected>Pilih Jenis Pembayaran</option>
 									@foreach ($data["eventPayment"] as $payment)
 									<option value="<?= $payment['id'] ?>">{{ $payment["type"] }}</option>
@@ -168,12 +169,14 @@
 								</select>
 							</div>
 							<div class="file-field input-field col s12">
-								<div class="btn amber">
-									<span>Unggah Foto Bukti Pembayaran</span>
-									<input type="file">
-								</div>
-								<div class="file-path-wrapper">
-									<input class="file-path validate" type="text">
+								<div class="file-field input-field">
+									<div class="btn amber">
+										<span>Unggah Bukti Pembayaran</span>
+										<input type="file" name="paymentPhoto">
+									</div>
+									<div class="file-path-wrapper">
+										<input class="file-path validate" type="text">
+									</div>
 								</div>
 							</div>
 							@endif

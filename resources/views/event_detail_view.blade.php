@@ -128,6 +128,18 @@
 							</tr>
 							@endforeach
 						</table>
+						@if($data["eventPayment"] != null)
+						<div class="content"></div>
+						<p class="card-title">Info Pembayaran</p>
+						<table>
+							@foreach ($data["eventPayment"] as $payment)
+							<div class="contact-person">
+								<p>{{ $payment["type"] }}</p>
+								<p>{{ $payment["information"]}}</p>
+							</div>
+							@endforeach
+						</table>
+						@endif
 						<div class="content"></div>
 						<p class="card-title">Contact Person</p>
 						<table>
@@ -138,6 +150,7 @@
 							</div>
 							@endforeach
 						</table>
+
 						<div class="content"></div>
 						<p class="card-title">Organized By</p>
 						{{ $data["eventOrganizer"]["organizerName"] }}

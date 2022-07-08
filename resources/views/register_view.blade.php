@@ -120,9 +120,10 @@
 			<div class="card-content">
 				<div class="row">
 					<div class="col m8 s12">
-						<span class="card-title activator grey-text text-darken-4">
-							{{ $data["name"] }}
-						</span>
+
+						<a href="{{ url('event/' . $data['id']) }}" class="card-title activator grey-text text-darken-4">{{
+							$data["name"] }}</a>
+
 						<p class="event-category">
 							{{ $data["eventCategory"]["name"] }}
 						</p>
@@ -157,6 +158,7 @@
 								</select>
 							</div>
 							@if ($data["ticket"][0]["price"] > 0)
+
 							<div class="input-field col s12">
 								<select>
 									<option value="" disabled selected>Pilih Jenis Pembayaran</option>
@@ -181,6 +183,18 @@
 						</form>
 					</div>
 					<div class="col m4 s12">
+						@if($data["eventPayment"] != null)
+						<p class="card-title">Info Pembayaran</p>
+						<table>
+							@foreach ($data["eventPayment"] as $payment)
+							<div class="contact-person">
+								<p>{{ $payment["type"] }}</p>
+								<p>{{ $payment["information"]}}</p>
+							</div>
+							@endforeach
+							<div class="spacer"></div>
+						</table>
+						@endif
 						<p class="card-title">Organized By</p>
 						{{ $data["eventOrganizer"]["organizerName"] }}
 						<div class="spacer"></div>
@@ -210,6 +224,7 @@
 								</tr>
 							</tbody>
 						</table>
+
 						<div class="spacer"></div>
 						<p class="card-title event-description-title">
 							Lokasi Event
@@ -233,6 +248,8 @@
 							</div>
 							@endforeach
 						</table>
+						<div class="spacer"></div>
+
 					</div>
 				</div>
 			</div>

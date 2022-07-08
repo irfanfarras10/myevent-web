@@ -143,6 +143,14 @@
 									@endforeach
 								</select>
 							</div>
+							<div class="input-field col s12">
+								<select>
+									<option value="" disabled selected>Pilih Tiket</option>
+									@foreach ($data["ticket"] as $ticket)
+									<option value="<?= $ticket['id'] ?>">{{ $ticket["name"] }}</option>
+									@endforeach
+								</select>
+							</div>
 						</form>
 					</div>
 					<div class="col m4 s12">

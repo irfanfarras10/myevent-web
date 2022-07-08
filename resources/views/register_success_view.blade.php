@@ -35,8 +35,14 @@
                         <p class="card-title activator grey-text text-darken-4">Berhasil Mendaftar</p>
                     </div>
                     <div class="col s12 center-align">
+                        @if($eventPaymentCategory == 2)
                         <h3>Pendaftaran Anda berhasil. Silahkan tunggu email konfirmasi pembayaran dari penyelenggara.
                         </h3>
+                        @else if($eventPaymentCategory == 1)
+                        <h3>Pendaftaran Anda berhasil. Silahkan tunggu email untuk mendapatkan tiket dan informasi lebih
+                            lanjut
+                        </h3>
+                        @endif
                         <a href="{{ url('event/' . $eventId) }}"
                             class="waves-effect waves-light btn amber black-text">OK
                         </a>

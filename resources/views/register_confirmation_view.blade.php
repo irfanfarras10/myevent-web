@@ -58,12 +58,12 @@
                                     <td>Tiket</td>
                                     <td>{{ explode('|', $data['ticketId'])[1] }}</td>
                                 </tr>
+                                @if($data["eventPaymentCategory"] == 2)
                                 <tr>
                                     <td>Pembayaran</td>
                                     <td>{{ explode('|', $data['paymentId'])[1] }}</td>
                                 </tr>
-                            
-                                
+                                @endif
                             </table>
                         </div>
                         <div class="col s12 center-align">

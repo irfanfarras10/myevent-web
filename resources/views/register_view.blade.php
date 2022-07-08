@@ -103,6 +103,11 @@
 	ul.dropdown-content.select-dropdown li span {
 		color: black;
 	}
+
+
+	.btn {
+		color: black;
+	}
 </style>
 <title>Registrasi Peserta</title>
 
@@ -150,6 +155,28 @@
 									<option value="<?= $ticket['id'] ?>">{{ $ticket["name"] }}</option>
 									@endforeach
 								</select>
+							</div>
+							@if ($data["ticket"][0]["price"] > 0)
+							<div class="input-field col s12">
+								<select>
+									<option value="" disabled selected>Pilih Jenis Pembayaran</option>
+									@foreach ($data["eventPayment"] as $payment)
+									<option value="<?= $payment['id'] ?>">{{ $payment["type"] }}</option>
+									@endforeach
+								</select>
+							</div>
+							<div class="file-field input-field col s12">
+								<div class="btn amber">
+									<span>Unggah Foto Bukti Pembayaran</span>
+									<input type="file">
+								</div>
+								<div class="file-path-wrapper">
+									<input class="file-path validate" type="text">
+								</div>
+							</div>
+							@endif
+							<div class="input-field col s12">
+								<input type="submit" value="Daftar" class="btn col s12 amber">
 							</div>
 						</form>
 					</div>

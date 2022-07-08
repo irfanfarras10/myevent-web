@@ -116,7 +116,8 @@
 						@endif
 					</div>
 					<div class="col m4 s12">
-						<a class="waves-effect waves-light btn amber" id="button">Daftarkan Diri</a>
+						<a class="waves-effect waves-light btn amber col s12" id="button"
+							href="{{ url('/event/' . $data['id'] . '/register') }}">Daftarkan Diri</a>
 						<div class="content"></div>
 						<p class="card-title">Tiket</p>
 						<table>

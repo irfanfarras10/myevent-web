@@ -44,11 +44,14 @@ class UserController extends Controller
 
     public function showConfirmation(Request $request)
     {
-        $paymentPhoto = $request->paymentPhoto;
-        $originalFile = $paymentPhoto->getClientOriginalName();
-        $paymentPhoto->move(public_path(), $originalFile);
-        $fileImage = substr(Storage::url(public_path() . '/' . $originalFile), 9);
-        return View::make('register_confirmation_view')->with('data', $request)->with('paymentPhoto', $fileImage);
+        if ($request->eventPaymentCategory == 2) {
+            $paymentPhoto = $request->paymentPhoto;
+            $originalFile = $paymentPhoto->getClientOriginalName();
+            $paymentPhoto->move(public_path(), $originalFile);
+            $fileImage = substr(Storage::url(public_path() . '/' . $originalFile), 9);
+            return View::make('register_confirmation_view')->with('data', $request)->with('paymentPhoto', $fileImage);
+        }
+        return View::make('register_confirmation_view')->with('data', $request);
     }
 
     public function register(Request $request)
@@ -78,10 +81,6 @@ class UserController extends Controller
                     [
                         'name' => 'ticketId',
                         'contents' => $request->ticketId,
-                    ],
-                    [
-                        'name' => 'paymentId',
-                        'contents' => $request->paymentId,
                     ],
                 ]
             ]);

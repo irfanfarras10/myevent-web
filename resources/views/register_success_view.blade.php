@@ -38,7 +38,7 @@
                         @if($eventPaymentCategory == 2)
                         <h3>Pendaftaran Anda berhasil. Silahkan tunggu email konfirmasi pembayaran dari penyelenggara.
                         </h3>
-                        @else if($eventPaymentCategory == 1)
+                        @else
                         <h3>Pendaftaran Anda berhasil. Silahkan tunggu email untuk mendapatkan tiket dan informasi lebih
                             lanjut
                         </h3>

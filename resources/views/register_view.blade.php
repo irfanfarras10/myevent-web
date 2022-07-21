@@ -100,6 +100,7 @@
 		color: black !important;
 	}
 
+
 	ul.dropdown-content.select-dropdown li span {
 		color: black;
 	}
@@ -116,7 +117,8 @@
 				<div class="row">
 					<div class="col m8 s12">
 
-						<a href="{{ url('event/' . $data['id']) }}" class="card-title activator grey-text text-darken-4">{{
+						<a href="{{ url('event/' . $data['id']) }}"
+							class="card-title activator grey-text text-darken-4">{{
 							$data["name"] }}</a>
 
 						<p class="event-category">
@@ -124,9 +126,11 @@
 						</p>
 						<div class="spacer"></div>
 
-						<form action="{{ url('event/' . $data['id'] . '/confirm/') }}" method="post" enctype="multipart/form-data">
+						<form action="{{ url('event/' . $data['id'] . '/confirm/') }}" method="post"
+							enctype="multipart/form-data">
 							<input name="_token" type="hidden" value="{{ csrf_token() }}" />
-							<input type="hidden" name="eventPaymentCategory" value="{{ $data['eventPaymentCategory']['id'] }}">
+							<input type="hidden" name="eventPaymentCategory"
+								value="{{ $data['eventPaymentCategory']['id'] }}">
 							<input type="hidden" name="eventId" value="{{ $data['id'] }}">
 							<div class="input-field col s12">
 								<input id="fullname" type="text" class="validate" name="name" required>
@@ -164,7 +168,14 @@
 								<select name="ticketId" required>
 									<option value="" disabled selected>Pilih Tiket</option>
 									@foreach ($data["ticket"] as $ticket)
-									<option value="<?= $ticket['id'] . '|' . $ticket['name'] ?>">{{ $ticket["name"] }}</option>
+									@if($ticket["quotaTotal"] == 0)
+									<option value="<?= $ticket['id'] . '|' . $ticket['name'] ?>" disabled>{{
+										$ticket["name"] . " " . "(Tiket Sudah Habis)"}}
+									</option>
+									@else
+									<option value="<?= $ticket['id'] . '|' . $ticket['name'] ?>">{{ $ticket["name"] }}
+									</option>
+									@endif
 									@endforeach
 								</select>
 								@error("ticketId")
@@ -177,7 +188,8 @@
 								<select name="paymentId" required>
 									<option value="" disabled selected>Pilih Jenis Pembayaran</option>
 									@foreach ($data["eventPayment"] as $payment)
-									<option value="<?= $payment['id'] . '|' . $payment['type']?>">{{ $payment["type"] }}</option>
+									<option value="<?= $payment['id'] . '|' . $payment['type']?>">{{ $payment["type"] }}
+									</option>
 									@endforeach
 								</select>
 								@error("paymentId")

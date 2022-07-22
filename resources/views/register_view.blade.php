@@ -209,17 +209,19 @@
                                         <div class="red-text">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="input-field col s12">
-                                    <select name="eventDate" required>
-                                        <option value="" disabled selected>Pilih Tanggal</option>
-                                        @foreach ($eventDate['localDates'] as $date)
-                                            <option value="<?= $date ?>">{{ $date }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('eventDate')
-                                        <div class="red-text">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                                @if ($data['ticket'][0]['quotaPerDay'] > 0)
+                                    <div class="input-field col s12">
+                                        <select name="eventDate" required>
+                                            <option value="" disabled selected>Pilih Tanggal</option>
+                                            @foreach ($eventDate['localDates'] as $date)
+                                                <option value="<?= $date ?>">{{ $date }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('eventDate')
+                                            <div class="red-text">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                @endif
                                 <div class="input-field col s12">
                                     <select name="ticketId" required>
                                         <option value="" disabled selected>Pilih Tiket</option>

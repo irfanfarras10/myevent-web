@@ -62,10 +62,12 @@
                                     <td>Nomor HP</td>
                                     <td>{{ $data['phoneNumber'] }}</td>
                                 </tr>
+                                @if($data['eventDate'] != null)
                                 <tr>
                                     <td>Tanggal</td>
                                     <td>{{ $data['eventDate'] }}</td>
                                 </tr>
+                                @endif
                                 <tr>
                                     <td>Tiket</td>
                                     <td>{{ explode('|', $data['ticketId'])[1] }}</td>
